@@ -1,0 +1,17 @@
+#! /usr/bin/env python
+
+import argparse
+import musicbrainzngs
+import discid
+
+musicbrainzngs.set_useragent("Audacious", "0.1", "https://github.com/jonnybarnes/audacious")
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--cdrom", help="provide the source of the cd", default="/dev/cdrom")
+args = parser.parse_args()
+
+device = args.cdrom
+
+print("device: %s" % device)
+disc = discid.read(device)
+print("id: %s" % disc.id)
