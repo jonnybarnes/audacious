@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 
+import os
 import argparse
 import musicbrainzngs
 import discid
@@ -30,3 +31,10 @@ else:
 	elif result.get("cdstub"):
 		print("artist:\t" % result["cdstub"]["artist"])
 		print("title:\t" % result["cdstub"]["title"])
+
+print("Creating directories")
+try:
+	os.mkdir("./wav")
+	os.mkdir("./mp3")
+except FileExistsError:
+	print("Directories already exist")
