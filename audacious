@@ -17,14 +17,16 @@ disc = discid.read(device)
 print("id: %s" % disc.id)
 
 try:
-	result = musicbrainzngs.get_releases_by_discid(disc.id, includes=["artists"])
+	result = musicbrainzngs.get_releases_by_discid(disc.id, includes=["artists", "recordings"])
 except musicbrainzngs.ResponseError:
 	print("disc not found or bad response")
 else:
 	if result.get("disc"):
-		print("artist:\t%s" %
-			result["disc"]["release-list"][0]["artist-credit-phrase"])
-		print("title:\t%s" % result["disc"]["release-list"][0]["title"])
+		artist = result["disc"]["release-list"][0]["artist-credit-phrase"]
+		print("artist:\t%s" % artist)
+		title = result["disc"]["release-list"][0]["title"]
+		print("title:\t%s" % title)
+		tracklist = result["disc"]["release-list"][0]["medium-list"][0]["track-list"]
 	elif result.get("cdstub"):
 		print("artist:\t" % result["cdstub"]["artist"])
 		print("title:\t" % result["cdstub"]["title"])
