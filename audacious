@@ -4,6 +4,7 @@ import os
 import argparse
 import musicbrainzngs
 import discid
+from subprocess import call
 
 musicbrainzngs.set_useragent("Audacious", "0.1", "https://github.com/jonnybarnes/audacious")
 
@@ -38,3 +39,11 @@ try:
 	os.mkdir("./mp3")
 except FileExistsError:
 	print("Directories already exist")
+
+print("Ripping CD with cdparanoia")
+os.chdir("./wav")
+call(["cdparanoia", "-B", "1"])
+
+print("Converting WAVs to MP3s")
+os.chdir("../mp3")
+call(["lame", "-V2", "../wav/track01.cdda.wav", "track01.mp3"])
